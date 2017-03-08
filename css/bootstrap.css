@@ -144,7 +144,16 @@ input {
   line-height: normal;
 }
 input[type="checkbox"],
+<<<<<<< HEAD
 
+=======
+input[type="radio"] {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+}
+>>>>>>> 6d4f0306a781116947b4cd3dfdfd101ede24c7e9
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   height: auto;
@@ -2512,7 +2521,16 @@ input[type="search"] {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
+<<<<<<< HEAD
 
+=======
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px \9;
+  line-height: normal;
+}
+>>>>>>> 6d4f0306a781116947b4cd3dfdfd101ede24c7e9
 input[type="file"] {
   display: block;
 }
@@ -2525,6 +2543,10 @@ select[size] {
   height: auto;
 }
 input[type="file"]:focus,
+<<<<<<< HEAD
+=======
+input[type="radio"]:focus,
+>>>>>>> 6d4f0306a781116947b4cd3dfdfd101ede24c7e9
 input[type="checkbox"]:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
@@ -2637,13 +2659,26 @@ input[type="search"] {
   font-weight: normal;
   cursor: pointer;
 }
+<<<<<<< HEAD
+=======
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+>>>>>>> 6d4f0306a781116947b4cd3dfdfd101ede24c7e9
 .checkbox input[type="checkbox"],
 .checkbox-inline input[type="checkbox"] {
   position: absolute;
   margin-top: 4px \9;
   margin-left: -20px;
 }
+<<<<<<< HEAD
 
+=======
+.radio + .radio,
+.checkbox + .checkbox {
+  margin-top: -5px;
+}
+.radio-inline,
+>>>>>>> 6d4f0306a781116947b4cd3dfdfd101ede24c7e9
 .checkbox-inline {
   position: relative;
   display: inline-block;
@@ -2653,7 +2688,35 @@ input[type="search"] {
   vertical-align: middle;
   cursor: pointer;
 }
+<<<<<<< HEAD
 
+=======
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+  margin-top: 0;
+  margin-left: 10px;
+}
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"].disabled,
+input[type="checkbox"].disabled,
+fieldset[disabled] input[type="radio"],
+fieldset[disabled] input[type="checkbox"] {
+  cursor: not-allowed;
+}
+.radio-inline.disabled,
+.checkbox-inline.disabled,
+fieldset[disabled] .radio-inline,
+fieldset[disabled] .checkbox-inline {
+  cursor: not-allowed;
+}
+.radio.disabled label,
+.checkbox.disabled label,
+fieldset[disabled] .radio label,
+fieldset[disabled] .checkbox label {
+  cursor: not-allowed;
+}
+>>>>>>> 6d4f0306a781116947b4cd3dfdfd101ede24c7e9
 .form-control-static {
   min-height: 34px;
   padding-top: 7px;
