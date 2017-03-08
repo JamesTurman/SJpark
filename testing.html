@@ -1,0 +1,34 @@
+<!DOCTYP html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Park Review</title>
+	<link rel="shortcut icon" href="assets/sj_favicon.ico">
+	<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="assets/css/jqm-demos.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/main.css">
+	<script src="assets/js/index.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+			<div>
+				<input id="autocomplete" name="nameOfFacilityText" title="Start typing park name here">
+			</div>
+		<script>
+				var availableTags = [
+					{value: BKWAYFries, label: "87 BIKEWAY - BRANHAM TO CAPITOL"},
+					{value: MLKJR, label: "McDonalds"},
+					{value: ACKT, label: "French Fries"}
+				];
+				$( "#autocomplete" ).autocomplete({
+					source: availableTags
+					select: function (event, ui){
+						$("#textAllowSearch").val(ui.item.label);
+						$("#txtAllowSearchID").val(ui.item.value);
+						}
+				});
+				document.writeln(ui.item.value)
+		</script>
+</body>

@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Park Review</title>
+	<link rel="shortcut icon" href="assets/sj_favicon.ico">
+	<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="assets/css/jqm-demos.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+	<script src="assets/js/index.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="js/jquery2.js"></script>
+	<script src="js/jquery-ui.js"></script>
+</head>
+<body>
+<form METHOD = "POST" ACTION = "newphp.php" id = "parkLoad" onSubmit="return valid(form)">
+
+	<div data-role="page" class="jqm-demos">
+		<div data-role="header">
+			<h1>San Jose City Parks Assessment</h1>
+		</div>
+		<div class="container center-block">
+        	<img src="assets/sjLogo.png" class="center-block">
+			<label for="nameOfFacilityText"><strong>Name of facility:</strong></label>
+			<p>Start typing to search for park and select the park from the list</p>
+			<div>
+				<input id="autocomplete" name="nameOfFacilityText" title="Start typing park name here">
+			</div>
+			<script>
+				var availableTags = [
+					"87 BIKEWAY - BRANHAM TO CAPITOL",
+					"ALMADEN LAKE PARK",
+					"ALMADEN LIB & CC ",
+					"ALMADEN MEADOWS PARK",
+					"ALMADEN WINERY PARK",
+					"AVENIDA ESPANA PARK",
+					"CAHALAN PARK",
+					"CALERO CREEK TRAIL",
+					"CALERO PARK",
+					"CAROLYN NORRIS PARK",
+					"CARRABELLE PARK",
+					"CASTILLERO JUNIOR HIGH TENNIS COURTS",
+					"CATHEDRAL OAKS PARK",
+					"CENTURY OAKS PARK",
+					"CHARLOTTE COMMON PARK",
+					"CHRIS HOTTS PARK",
+					"COMANCHE PARK ",
+					"COYOTE CREEK SOUTH @ METCALF",
+					"DE ANZA PARK",
+					"DISCOVERY GARDENS",
+					"FOOTHILL PARK",
+					"GEORGE PAGE PARK",
+					"GLENVIEW PARK",
+					"GREAT OAKS PARK",
+					"GREYSTONE PARK",
+					"GUADALUPE CREEK TRAIL ALMADEN TO SINGLE TREE ",
+					"GUADALUPE OAK GROVE PARK",
+					"GUADALUPE RIVER TRAIL-BRIDGE @ COLEMAN",
+					"GUADALUPE TRAIL REACH 12",
+					"HITACHI DOG PARK",
+					"JEFFREY FONTANA MIDDLE DOG PARK ",
+					"JEFFREY FONTANA PARK EAST",
+					"JEFFREY FONTANA PARK MIDDLE",
+					"JEFFREY FONTANA PARK WEST",
+					"LA COLINA COMMUNITY GARDEN",
+					"LA COLINA PARK",
+					"LAGUNA SECA COMMUNITY GARDEN",
+					"LIEF ERIKSON PARK",
+					"LOS ALAMITOS CREEK TRAIL",
+					"LOS PASEOS PARK",
+					"MINER PARK",
+					"MIYUKI DOG PARK",
+					"O'MALLEY STIENBECK SPORTS FIELD",
+					"OHLONE INDIAN BURIAL GROUNDS",
+					"PALMIA PARK",
+					"PARMA PARK",
+					"PEARL AVENUE LIBRARY",
+					"PFEIFFER PARK",
+					"PLAYA DEL REY PARK",
+					"POLICE SUBSTATION",
+					"RALEIGH LINEAR GREEN",
+					"RAMAC PARK",
+					"RUSSO PARK",
+					"SANTA TERESA LIBRARY",
+					"SOUTHSIDE COMMUNITY CENTER",
+					"T.J. MARTIN PARK 1",
+					"T.J. MARTIN PARK 2",
+					"T.J. MARTIN PARK 3",
+					"VARGAS TRAIL",
+					"WILLIAM H. CILKER- PARK SYSTEM",
+					"ALUM ROCK YOUTH CENTER",
+					"ALVISO YOUTH CENTER",
+					"BASKING RIDGE PARK",
+					"BONITA PARK",
+					"CANOAS PARK",
+					"CENTRAL SERVICE YARD",
+					"CHILDREN OF THE RAINBOW PARK",
+					"CHYNOWETH PARK",
+					"COY AVENUE PARK ",
+					"DANNA ROCK PARK",
+					"DOVE HILL PARK",
+					"EDENVALE COMMUNITY CENTER",
+					"EDENVALE GARDEN PARK",
+					"EDENVALE LIBRARY",
+					"EDENVALE YOUTH CENTER",
+					"LONE BLUFF MINI PARK",
+					"MEADOWS PARK",
+					"MELODY PARK",
+					"METCALF PARK",
+					"PARKVIEW I PARK",
+					"PARKVIEW II PARK",
+					"PARKVIEW III PARK",
+					"PIERCY PARK",
+					"RUBINO PARK",
+					"SAN ANTONIO TOT LOT",
+					"SEVEN TREES LIBRARY",
+					"SHADY OAKS PARK",
+					"SILVER LEAF PARK",
+					"SOLARI COMMUNITY CENTER",
+					"SOLARI PARK",
+					"SYLVIA CASSELL PARK",
+					"TERRELL PARK",
+					"THOUSAND OAKS PARK",
+					"VIEIRA PARK",
+					"VIEIRA PARK OUTLOOK",
+					"VISTA PARK",
+					"WATERFORD PARK",
+					"BASCOM BRANCH LIBRARY",
+					"BIEBRACH PARK ",
+					"BRAMHALL BOWLING GREEN",
+					"BRAMHALL PARK",
+					"BRANHAM PARK",
+					"BUENA VISTA PARK",
+					"BUTCHER DOG PARK",
+					"BUTCHER PARK",
+					"CALABAZAS (BMX) BIKE PARK",
+					"CALABAZAS LIBRARY",
+					"CALABAZAS PARK",
+					"CAMBRIAN LIBRARY",
+					"CAMDEN COMMUNITY CENTER",
+					"CAMDEN PARK",
+					"CYPRESS SENIOR CENTER",
+					"DEL MONTE PARK",
+					"DOERR PARK",
+					"FIRE TRAINING CENTER",
+					"FRANK M. SANTANA PARK",
+					"FULLER PARK",
+					"GARDNER COMMUNITY CENTER",
+					"GLEASON AVENUE MINI PARK",
+					"GREEN THUMB COMMUNITY CENTER",
+					"GREGORY PLAZA TOT LOT",
+					"GREGORY STREET BRIDGE ",
+					"GULLO PARK",
+					"HAMLINE COMMUNITY GARDEN",
+					"HATHAWAY PARK",
+					"HOUGE PARK",
+					"HUERTA TOT LOT",
+					"HUMMINGBIRD PARK",
+					"JESSE FREY COMMUNITY GARDEN",
+					"KIRK COMMUNITY CENTER",
+					"KIRK PARK",
+					"LATIMER COMMUNITY GARDEN",
+					"LINCOLN GLEN PARK  ",
+					"LONE HILL PARK",
+					"LOS GATOS CREEK TRAIL",
+					"MARIJANE HAMANN PARK",
+					"MISE PARK",
+					"MURDOCK PARK",
+					"PAUL MOORE PARK",
+					"RAINBOW PARK",
+					"RIVER GLEN PARK",
+					"ROBERTO ANTONIO BALERMINO PARK",
+					"ROY AVENUE PARK",
+					"SAN TOMAS PARK",
+					"SARATOGA CREEK DOG PARK",
+					"SARATOGA CREEK PARK",
+					"SCOTTSDALE PARK",
+					"ST. ELIZABETH PARK",
+					"STARBIRD PARK",
+					"VINELAND LIBRARY",
+					"WALLENBERG PARK",
+					"WEST PD SUBSTATION",
+					"WEST VALLEY LIBRARY",
+					"WESTSIDE PD AND CC",
+					"WILCOX PARK",
+					"WILLOW GLEN COMMUNITY CENTER",
+					"WILLOW GLEN LIBRARY",
+					"WILLOWS SENIOR CENTER",
+					"ABORN PARK",
+					"ANIMAL CARE CENTER",
+					"BARBERRY LANE WALKWAY",
+					"BOGGINI PARK",
+					"BOYS AND GIRLS CLUB",
+					"BRIGADOON PARK",
+					"BRIGADOON TOT LOT",
+					"CANYON CREEK PARK",
+					"COYOTE CREEK COMMUNITY GARDENS",
+					"EVERGREEN COMMUNTIY CENTER",
+					"EVERGREEN LIBRARY",
+					"EVERGREEN PARK",
+					"FAIR SWIM CENTER AND TOT LOT",
+					"FALLS CREEK LANDS",
+					"FALLS CREEK PARK",
+					"FERNISH PARK",
+					"FOWLER CREEK PARK",
+					"GROESBECK HILL PARK",
+					"HANK LOPEZ COMMUNITY CENTER",
+					"HILLVIEW PARK",
+					"LA RAGIONE UNDEVELOPED PARK",
+					"LA RAGOINE TOT LOT",
+					"LAKE CUNNINGHAM PARK",
+					"LEYVA TENNIS COURTS",
+					"MEADOWFAIR COMMUNITY",
+					"MEADOWFAIR PARK",
+					"METZER RANCH",
+					"MONTGOMERY HILL PARK",
+					"MT. PLEASANT PARK",
+					"NEW HILLVIEW LIBRARY",
+					"NISICH PARK",
+					"NUESTRA TIERRA COMM GARDEN",
+					"OLD HILLVIEW LIBRARY",
+					"RAMBLEWOOD PARK",
+					"SCENIC MEADOWS PARK",
+					"SILVER CREEK LINEAR PARK",
+					"SILVER CREEK LINEAR PARK 2",
+					"SINGLETON LANDFILL",
+					"SOLARI COMMUNITY CENTER ANNEX",
+					"SW CORNER OF YERBA BUENA AND SAN FELIPE (UNDEVELOPED)",
+					"UMBARGER ROAD WALKWAY",
+					"WELCH PARK",
+					"WEST EVERGREEN PARK",
+					"ALMA SENIOR CENTER",
+					"ARENA GREEN EAST",
+					"ARENA GREEN WEST",
+					"BACKESTO PARK ",
+					"BELLEVUE PARK",
+					"BERNAL PARK",
+					"BESTOR ART PARK",
+					"BIBLIOTECA LIBRARY",
+					"BRENDA LOPEZ PLAZA ",
+					"CAHILL PARK",
+					"CITY HALL",
+					"COLUMBUS PARK 1",
+					"COLUMBUS PARK 2",
+					"CONFLUENCE POINT",
+					"EAST BRANCH CARNEGIE LIBRARY",
+					"FALLON HOUSE",
+					"FORESTDALE TOT LOT",
+					"GRP- VIRGINIA TO ALVISO",
+					"GUADALUPE 'E' PARKING LOT",
+					"GUADALUPE GARDENS AND HERITAGE ROSE GARDEN -  PARK SYSTEM",
+					"GUADALUPE GARDENS- COMMUNITY GARDENS PARK SYSTEM",
+					"GUADALUPE RIVER PARK - St. John to I-880- PARK SYSTEM",
+					"GUADALUPE RIVER PARK- DISCOVERY DOG -PARK SYSTEM",
+					"HESTER PARK",
+					"JOHN P. MCENERY PARK",
+					"JOYCE ELLINGTON BRANCH LIBRARY",
+					"LUNA PARK",
+					"MARTIN PARK",
+					"MCKINLEY COMMUNITY CENTER",
+					"MUNICIPAL ROSE GARDEN",
+					"NEWHALL PARK ",
+					"NORTHSIDE SENIOR CENTER",
+					"O'CONNER PARK",
+					"O'DONNELL GARDEN PARK",
+					"PARQUE DE LOS POBLEDORES PLAZA",
+					"PARQUE DE PADRE MATEO SHEEDY",
+					"PELLIER PARK",
+					"PERALTA ADOBE",
+					"PLAZA DE CESAR CHAVEZ PARK",
+					"RINCON SOUTH PARK- PARK SYSTEM",
+					"RIVER OAKS PEDESTRIAN BRIDGE",
+					"ROOSEVELT COMMUNITY CENTER",
+					"ROOSEVELT PARK",
+					"ROSE GARDEN LIBRARY",
+					"ROSEMARY GARDEN PARK",
+					"RYLAND DOG PARK",
+					"RYLAND PARK",
+					"SELMA OLINDER DOG PARK",
+					"SELMA OLINDER PARK",
+					"ST. JAMES PARK",
+					"STOCKTON STREET PARKING LOT",
+					"SUPER BLOCK PARKING LOT",
+					"THEODORE LENZEN PARK",
+					"WATSON DOG PARK",
+					"WATSON PARK",
+					"WATSON SOCCER BOWL",
+					"WILLIAM STREET PARK",
+					"ALUM ROCK LIBRARY",
+					"ALUM ROCK PARK",
+					"CAPITOL PARK",
+					"CIMARRON PARK",
+					"CORNUCOPIA COMMUNITY GARDEN",
+					"EDUCATIONAL PARK LIBRARY",
+					"EL JARDIN COMMUNITY GARDEN",
+					"EMMA PRUSCH FARM PARK",
+					"FLEMING PARK",
+					"HACIENDA PARK",
+					"JACKSON MADDEN PARK",
+					"LAS PLUMAS WAREHOUSE",
+					"LO BUE PARK",
+					"MAYFAIR COMMUNITY CENTER",
+					"MAYFAIR COMMUNITY GARDEN",
+					"MAYFAIR PARK",
+					"NANCY LANE PLAZA",
+					"OUR PARK",
+					"OVERFELT GARDEN PARK",
+					"PAL STADIUM",
+					"PARQUE DE LA AMISTAD",
+					"PLATA ARROYO PARK",
+					"SHEPPARD SPORTS FIELD ",
+					"ZOLEZZI PARK",
+					"GEORGE SHIRAKAWA COMM CENTER",
+					"HAPPY HOLLOW PARK AND ZOO",
+					"HISTORY PARK AND MUSEUM",
+					"KELLEY PARK",
+					"KELLEY PARK JAPANESE FRIENDSHIP GRDN",
+					"KELLEY PARK OPEN AREAS",
+					"LEININGER CENTER",
+					"MCLAUGHLIN PARK",
+					"MUNICIPAL RIFLE RANGE",
+					"ROCK SPRINGS PARK",
+					"STONEGATE PARK",
+					"TULLY COMMUNITY BALLFIELDS",
+					"TULLY LIBRARY",
+					"TURTLE ROCK PARK",
+					"VIETNAMESE HERITAGE GARDEN",
+					"WINDMILL SPRINGS PARK",
+					"ALVISO CC AND LIBRARY",
+					"ALVISO GARDEN",
+					"ALVISO PARK ",
+					"ALVISO POLICE SUBSTATION",
+					"BERRYESSA CENTER PORTABLES",
+					"BERRYESSA COMMUNITY CENTER ",
+					"BERRYESSA COMMUNITY GARDEN",
+					"BERRYESSA CREEK PARK ",
+					"BERRYESSA LIBRARY",
+					"BROOKTREE PARK",
+					"CATALDI PARK",
+					"COMMODORE PARK ",
+					"FLICKINGER PARK",
+					"GRAN PARADISO PARK",
+					"MOITOZO PARK",
+					"NOBLE HOUSE",
+					"NOBLE PARK",
+					"NORTHWOOD PARK",
+					"OLD ALVISO CC ",
+					"ORCHARD PARK",
+					"PENITENCIA CREEK PARK",
+					"RIVER OAKS PARK",
+					"RIVERVIEW PARK",
+					"TOWNSEND PARK",
+					"VINCI PARK",
+					"VISTA MONTANA COMMUNITY PARK"
+				];
+				$( "#autocomplete" ).autocomplete({
+					source: availableTags
+				});
+			</script>
+			<label for="supervisorText"><strong>PMD supervisor name:</strong></label>
+			<textarea cols="40" rows="8" name="supervisorText" id="supervisorComment"></textarea>
+			<label for="raterText"><strong>Your name:</strong></label>
+			<textarea cols="40" rows="8" name="raterText" id="raterComment"></textarea>
+			<label><strong><br>Please select the rating for each category below, based on the entire park. 
+				(OK to skip if not category is not applicable to the park.)</strong></label>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Turf Appearance</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Turf Appearance</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="turfChoice" id="turfOne" value=1>
+							<label for="turfOne">1</label>
+							<input type="radio" name="turfChoice" id="turfTwo" value=2>
+							<label for="turfTwo">2</label>
+							<input type="radio" name="turfChoice" id="turfThree" value=3>
+							<label for="turfThree">3</label>
+							<input type="radio" name="turfChoice" id="turfFour" value=4>
+							<label for="turfFour">4</label>
+							<input type="radio" name="turfChoice" id="turfFive" value=5 checked="checked">
+							<label for="turfFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>75 % or more weeds, bare spots or brown patches. 
+								May include extensive gopher/ squirrel activity. 
+								Gopher/squirrel program abatement necessary.<br><br><strong>Recommended Action</strong>
+								<br>Fence off Park. Schedule complete turf renovation.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>50% or more weeds, bare spots, brown patches. 
+								May include extensive gopher/squirrel activiity. <br><br><strong>Recommended Action</strong>
+								<br>Fence off portion of the park. Renovate up to 50% of turf.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>25% - 50% weeds, bare spots, brown patches. 
+								May include some gopher/ squirrel activity. Establish maint. for vertebrate abatement.
+								<br><br><strong>Recommended Action</strong><br>Good condition overall. Playable. 
+								Monitor monthly gopher/ squirrel activity. Spot treat for broadleaf. Overseed.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>10% - 25% weeds, bare spots, brown patches. 
+								May include slight gopher/ squirrel activity.<br><br><strong>Recommended Action</strong>
+								<br>Very good condition. Turf is healthy. Monitor gophers/ squirrels. 
+								Trap as necessary. Aerate/fertilize 2x's/yr.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>10 %- or fewer weeds, bare spots, brown patches. 
+								No gopher/ squirrel activity.<br><br><strong>Recommended Action</strong>
+								<br>None. Brand New Facility.</p>
+							</div>
+
+						</div>
+					</div>
+					<label for="turfText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="turfText" id="turfComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Sports Fields</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Sports Fields</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="sportsFieldsChoice" id="sportsFieldsOne" value=1>
+							<label for="sportsFieldsOne">1</label>
+							<input type="radio" name="sportsFieldsChoice" id="sportsFieldsTwo" value=2>
+							<label for="sportsFieldsTwo">2</label>
+							<input type="radio" name="sportsFieldsChoice" id="sportsFieldsThree" value=3>
+							<label for="sportsFieldsThree">3</label>
+							<input type="radio" name="sportsFieldsChoice" id="sportsFieldsFour" value=4>
+							<label for="sportsFieldsFour">4</label>
+							<input type="radio" name="sportsFieldsChoice" id="sportsFieldsFive" value=5 checked="checked">
+							<label for="sportsFieldsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Playability</h4>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Standard</strong><br>Neighborhood parks with heavy traffic; limited resources resulting 
+								in low turf management intensity causing <u>moderate to heavy infestation of weeds</u>.<br>
+								<u>Practice fields (pick-up games)</u> may show signficant wear/ damage. 
+								Average of 10 hours of soccer play and/ or 12 hours of baseball/ week.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Choice</strong><br>Free of bumpiness, weed clumps, mounds, slopes on the grade, wet and 
+								dry spots, bare areas, and holes or other obstructions.<br>Moderate to high traffic. Management intensity 
+								is high. These fields support leagues. Average of 18 hours of scheduled soccer play and/ or 20 hours of baseball/ week.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - Premium</strong><br>Professional sports grade.<br>High attention to detail. 
+								Manicured, borders trimmed, big and little holes filled; lines are straight, mowing patterns are attractive.</p>
+							</div>
+						</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Play area is unsafe. 
+								Extensive gopher/ squirrel activity causing open holes in turf. 
+								Backstops, dugouts and bleachers unsafe/ need replacement. 
+								Turf is 75% or more of weeds.<br><br><strong>Recommended Action</strong>
+								<br>Turf is not playable. Close field for repairs. Needs major renovation.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Turf area consists 
+								of 50% or more weeds. Potential tripping hazards from woody weeds (mallow), 
+								worn areas, or from gopher/squirrel/ mole activity.<br><br><strong>
+								Recommended Action</strong><br>Schedule renovation and close off area(s) deemed unsafe.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>The turf is in good condition. It has between 25-50% weeds. 
+								It may include brown or worn spots. A partial field renovation may be necessary.
+								<br><br><strong>Recommended Action</strong><br>Schedule renovation and /or rest field. </p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Turf is mowed, green with very few weeds. Generally healthy. 
+								Highly recommend a horticultural turf crew. Must renovate 2-4 x/s per year.<br><br><strong>Recommended Action</strong>
+								<br>Monitor condition of field. In general, it's in very good playable condition.  </p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>Turf, bleachers, backstops, and dug-outs are new. No gopher/squirrel 
+								activity. Fertilized and the sprinklers are flush with the surface.  <br><br><strong>Recommended Action</strong>
+								<br>None. Newly renovated Sports Field.</p>
+							</div>
+						</div>
+					</div>
+					<label for="sportsFieldsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="sportsFieldsText" id="sportsFieldsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Artificial Turf (Sportsfield)</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Artificial Turf (Sportsfield)</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="artificialTurfChoice" id="artificialTurfOne" value=1>
+							<label for="artificialTurfOne">1</label>
+							<input type="radio" name="artificialTurfChoice" id="artificialTurfTwo" value=2>
+							<label for="artificialTurfTwo">2</label>
+							<input type="radio" name="artificialTurfChoice" id="artificialTurfThree" value=3>
+							<label for="artificialTurfThree">3</label>
+							<input type="radio" name="artificialTurfChoice" id="artificialTurfFour" value=4>
+							<label for="artificialTurfFour">4</label>
+							<input type="radio" name="artificialTurfChoice" id="artificialTurfFive" value=5 checked="checked">
+							<label for="artificialTurfFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Needs replacement.<br><br><strong>Recommended Action</strong>
+								<br>Replace artificial turf.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Approximately 10 years old. Need replacement soon.<br><br>
+								<strong>Recommended Action</strong><br>Schedule replacement.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>5-10 years old.
+								<br><br><strong>Recommended Action</strong><br>Continue ongoing maintenance. Groom yearly.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>3-5 years old. Minor trouble spots. Early signs of wear.<br><br>
+								<strong>Recommended Action</strong><br>Repair trouble spots.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New. Less than one year old.<br><br><strong>Recommended Action</strong>
+								<br>None.</p>
+							</div>
+						</div>
+					</div>
+					<label for="artificialTurfText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="artificialTurfText" id="artificialTurfComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Bleachers (Sportsfield)</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Bleachers (Sportsfield)</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="bleachersChoice" id="bleachersOne" value=1>
+							<label for="bleachersOne">1</label>
+							<input type="radio" name="bleachersChoice" id="bleachersTwo" value=2>
+							<label for="bleachersTwo">2</label>
+							<input type="radio" name="bleachersChoice" id="bleachersThree" value=3>
+							<label for="bleachersThree">3</label>
+							<input type="radio" name="bleachersChoice" id="bleachersFour" value=4>
+							<label for="bleachersFour">4</label>
+							<input type="radio" name="bleachersChoice" id="bleachersFive" value=5 checked="checked">
+							<label for="bleachersFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Needs replacement.<br><br><strong>Recommended Action</strong>
+								<br>Replace bleachers.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Approximately 10 years old. Need replacement soon.<br><br>
+								<strong>Recommended Action</strong><br>Schedule replacement.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>5-10 years old.
+								<br><br><strong>Recommended Action</strong><br>Continue ongoing maintenance.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>3-5 years old. Minor trouble spots. Early signs of wear.<br><br>
+								<strong>Recommended Action</strong><br>Repair trouble spots.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New. Less than one year old.<br><br><strong>Recommended Action</strong>
+								<br>None.</p>
+							</div>
+						</div>
+					</div>
+					<label for="bleachersText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="bleachersText" id="bleachersComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Trees</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Trees</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="treesChoice" id="treesOne" value=1>
+							<label for="treesOne">1</label>
+							<input type="radio" name="treesChoice" id="treesTwo" value=2>
+							<label for="treesTwo">2</label>
+							<input type="radio" name="treesChoice" id="treesThree" value=3>
+							<label for="treesThree">3</label>
+							<input type="radio" name="treesChoice" id="treesFour" value=4>
+							<label for="treesFour">4</label>
+							<input type="radio" name="treesChoice" id="treesFive" value=5 checked="checked">
+							<label for="treesFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>75% or more of the tree appears to be dead. 
+								May be considered unsafe; could be a potential fire hazrd.<br><br>
+								<strong>Recommended Action</strong><br>Schedule Removal</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Showing early signs of decline; 
+								discolored leaves, or dead branches throughout canopy.<br><br><strong>
+								Recommended Action</strong><br>Schedule major structural pruning. Talk to arborist 
+								about tree injection. Check for soil compaction, potential disease. Deep root irrigate and feed.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Good strong canopy; may need 
+								corrective pruning or require thinning.<br><br><strong>Recommended Action</strong><br>
+								Schedule pruning and thinning as needed. Deep root fertilize/irrigate.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Appears healthy; good green color, no disease. 
+								May require structural or minor pruning.<br><br><strong>Recommended Action</strong>
+								<br>Monitor condition and make notes of obvious changes.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>Newly Planted<br><br><strong>Recommended Action</strong>
+								<br>No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="treesText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="treesText" id="treesComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Tree Basins</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Tree Basins</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="treeBasinsChoice" id="treeBasinsOne" value=1>
+							<label for="treeBasinsOne">1</label>
+							<input type="radio" name="treeBasinsChoice" id="treeBasinsTwo" value=2>
+							<label for="treeBasinsTwo">2</label>
+							<input type="radio" name="treeBasinsChoice" id="treeBasinsThree" value=3>
+							<label for="treeBasinsThree">3</label>
+							<input type="radio" name="treeBasinsChoice" id="treeBasinsFour" value=4>
+							<label for="treeBasinsFour">4</label>
+							<input type="radio" name="treeBasinsChoice" id="treeBasinsFive" value=5 checked="checked">
+							<label for="treeBasinsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Groundcover, (g.c.) growing up into the tree. 
+								Weeds taken over 75 % or more of the tree basin. Unhealthy for tree.<br><br>
+								<strong>Recommended Action</strong><br>Unacceptable. Remove g.c. and weeds. 
+								Add mulch to basin for weed control.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Tree basin has 50% OR MORE weeds. 
+								Needs improvement.<br><br><strong>
+								Recommended Action</strong><br>Needs improvement. Remove weeds and add mulch. (leaf debris).</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Basin has 25-50 % weeds<br><br><strong>Recommended Action</strong><br>
+								Acceptable condition. Schedule weed abatement and mulch application for near future.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Weeds are 10-25 % per basin/average.<br><br>
+								<strong>Recommended Action</strong><br>Very good condition. Monitor.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>Less than 10% weeds in tree basins.<br><br><strong>Recommended Action</strong>
+								<br>No action necessary. Maintenance performed recently.</p>
+							</div>
+						</div>
+					</div>
+					<label for="treeBasinsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="treeBasinsText" id="treeBasinsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Shrubs</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Shrubs</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="shrubsChoice" id="shrubsOne" value=1>
+							<label for="shrubsOne">1</label>
+							<input type="radio" name="shrubsChoice" id="shrubsTwo" value=2>
+							<label for="shrubsTwo">2</label>
+							<input type="radio" name="shrubsChoice" id="shrubsThree" value=3>
+							<label for="shrubsThree">3</label>
+							<input type="radio" name="shrubsChoice" id="shrubsFour" value=4>
+							<label for="shrubsFour">4</label>
+							<input type="radio" name="shrubsChoice" id="shrubsFive" value=5 checked="checked">
+							<label for="shrubsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Plant appears to be 
+								diseased or 75 % or more dead growth. <br><br>
+								<strong>Recommended Action</strong><br>Schedule Removal</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>50% decline in growth/ new growth.
+								<br><br><strong>Recommended Action</strong><br>Consider replacement 
+								with another plant type, remove as necessary.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Good overall appearance; may begin to 
+								show signs of premature leaf drop or thining.<br><br><strong>Recommended Action</strong><br>
+								Monitor and re-evaluate.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Appears healthy; good green color, 
+								no disease. May require minor pruning.<br><br>
+								<strong>Recommended Action</strong><br>Prune as needed.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>Newly Planted<br><br><strong>Recommended Action</strong>
+								<br>No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="shrubsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="shrubsText" id="shrubsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Skinned Areas</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Skinned Areas</center></h2>
+					<h3 style="color:black"><center>Unplanted open area; often a planter bed without plants.</center></h3>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="skinnedAreasChoice" id="skinnedAreasOne" value=1>
+							<label for="skinnedAreasOne">1</label>
+							<input type="radio" name="skinnedAreasChoice" id="skinnedAreasTwo" value=2>
+							<label for="skinnedAreasTwo">2</label>
+							<input type="radio" name="skinnedAreasChoice" id="skinnedAreasThree" value=3>
+							<label for="skinnedAreasThree">3</label>
+							<input type="radio" name="skinnedAreasChoice" id="skinnedAreasFour" value=4>
+							<label for="skinnedAreasFour">4</label>
+							<input type="radio" name="skinnedAreasChoice" id="skinnedAreasFive" value=5 checked="checked">
+							<label for="skinnedAreasFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Very noticiable area. Weeds have taken over- 
+								candidate for mulch/ sheet mulching. <br><br><strong>Recommended Action</strong><br>
+								Remove weeds. Apply a weed block with mulch, wood chip, or use a pre-emergent. Constant monitoring.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Area is more than 50% weeds. Very unsightly.
+								<br><br><strong>Recommended Action</strong><br>Need to increase scheduled maintenance frequencies. Needs improvement.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Area consists of 25-50 % weeds.<br><br><strong>Recommended Action</strong><br>
+								None. Acceptable condition.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>10-25% weeds.<br><br>
+								<strong>Recommended Action</strong><br>None. Very good condition.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>Newly Planted<br><br><strong>Recommended Action</strong>
+								<br>None. New conditon.</p>
+							</div>
+						</div>
+					</div>
+					<label for="skinnedAreasText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="skinnedAreasText" id="skinnedAreasComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Groundcover/Flowers</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Groundcover/Flowers</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="groundcoverFlowersChoice" id="groundcoverFlowersOne" value=1>
+							<label for="groundcoverFlowersOne">1</label>
+							<input type="radio" name="groundcoverFlowersChoice" id="groundcoverFlowersTwo" value=2>
+							<label for="groundcoverFlowersTwo">2</label>
+							<input type="radio" name="groundcoverFlowersChoice" id="groundcoverFlowersThree" value=3>
+							<label for="groundcoverFlowersThree">3</label>
+							<input type="radio" name="groundcoverFlowersChoice" id="groundcoverFlowersFour" value=4>
+							<label for="groundcoverFlowersFour">4</label>
+							<input type="radio" name="groundcoverFlowersChoice" id="groundcoverFlowersFive" value=5 checked="checked">
+							<label for="groundcoverFlowersFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Diseased or dead plants.<br><br>
+								<strong>Recommended Action</strong><br>Remove affected plants.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Beginning to look unsightly.
+								<br><br><strong>Recommended Action</strong><br>Check irrigation timers. 
+								Adjust heads, remove plants if over-crowded. Weed as needed.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Not perfect, but still looking decent.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditon. Regular general maintenance.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Close to new.<br><br>
+								<strong>Recommended Action</strong><br>Newly planted; trim as necessary.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="groundcoverFlowersText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="groundcoverFlowersText" id="groundcoverFlowersComment"></textarea>
+				</div>	
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Hardscapes: Sidewalks</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Sidewalks</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="sidewalksChoice" id="sidewalksOne" value=1>
+							<label for="sidewalksOne">1</label>
+							<input type="radio" name="sidewalksChoice" id="sidewalksTwo" value=2>
+							<label for="sidewalksTwo">2</label>
+							<input type="radio" name="sidewalksChoice" id="sidewalksThree" value=3>
+							<label for="sidewalksThree">3</label>
+							<input type="radio" name="sidewalksChoice" id="sidewalksFour" value=4>
+							<label for="sidewalksFour">4</label>
+							<input type="radio" name="sidewalksChoice" id="sidewalksFive" value=5 checked="checked">
+							<label for="sidewalksFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Buckling/ tree roots- in need of immediate 
+								repair; uneven surface(s). Close access to sidewalk area.<br><br>
+								<strong>Recommended Action</strong><br>Repair/replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Raised uneven surface/ potential 
+								tripping hazard. Identify area with safety paint. Schedule repairs.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Infrastructure may require attention; monitor.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Normal wear; some staining may be present 
+								from plant material. Slight crack fissures, ok.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="sidewalksText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="sidewalksText" id="sidewalksComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Hardscapes: Pathways</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Pathways</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="pathwaysChoice" id="pathwaysOne" value=1>
+							<label for="pathwaysOne">1</label>
+							<input type="radio" name="pathwaysChoice" id="pathwaysTwo" value=2>
+							<label for="pathwaysTwo">2</label>
+							<input type="radio" name="pathwaysChoice" id="pathwaysThree" value=3>
+							<label for="pathwaysThree">3</label>
+							<input type="radio" name="pathwaysChoice" id="pathwaysFour" value=4>
+							<label for="pathwaysFour">4</label>
+							<input type="radio" name="pathwaysChoice" id="pathwaysFive" value=5 checked="checked">
+							<label for="pathwaysFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Asphalt/concrete missing; potential hazard. 
+								Close pathways.<br><br><strong>Recommended Action</strong><br>Repair/replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Raised uneven surface/ potential 
+								tripping hazard. Identify area with safety paint. Schedule repairs.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Infrastructure may require future attention; monitor.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Normal wear; some staining may be present from 
+								plant material. Slight crack fissures, ok.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="pathwaysText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="pathwaysText" id="pathwaysComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Hardscapes: Parking Lots</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Parking Lots</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="parkingLotsChoice" id="parkingLotsOne" value=1>
+							<label for="parkingLotsOne">1</label>
+							<input type="radio" name="parkingLotsChoice" id="parkingLotsTwo" value=2>
+							<label for="parkingLotsTwo">2</label>
+							<input type="radio" name="parkingLotsChoice" id="parkingLotsThree" value=3>
+							<label for="parkingLotsThree">3</label>
+							<input type="radio" name="parkingLotsChoice" id="parkingLotsFour" value=4>
+							<label for="parkingLotsFour">4</label>
+							<input type="radio" name="parkingLotsChoice" id="parkingLotsFive" value=5 checked="checked">
+							<label for="parkingLotsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Excessive potholes/ needs striping/ 
+								Close section.<br><br><strong>Recommended Action</strong><br>Repair/replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Schedule repairs.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Infrastructure may require future attention; monitor.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Normal wear. Very good condition.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="parkingLotsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="parkingLotsText" id="parkingLotsComment"></textarea>
+				</div>	
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Hardscapes: Court Surfaces</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Court Surfaces</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="courtSurfacesChoice" id="courtSurfacesOne" value=1>
+							<label for="courtSurfacesOne">1</label>
+							<input type="radio" name="courtSurfacesChoice" id="courtSurfacesTwo" value=2>
+							<label for="courtSurfacesTwo">2</label>
+							<input type="radio" name="courtSurfacesChoice" id="courtSurfacesThree" value=3>
+							<label for="courtSurfacesThree">3</label>
+							<input type="radio" name="courtSurfacesChoice" id="courtSurfacesFour" value=4>
+							<label for="courtSurfacesFour">4</label>
+							<input type="radio" name="courtSurfacesChoice" id="courtSurfacesFive" value=5 checked="checked">
+							<label for="courtSurfacesFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Uneven surface/cracks. Close off access.
+								<br><br><strong>Recommended Action</strong><br>Repair/replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Schedule repairs.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Infrastructure may require future attention; monitor.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Normal wear. Very good condition.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="courtSurfacesText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="courtSurfacesText" id="courtSurfacesComment"></textarea>
+				</div>	
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Hardscapes: Tennis Courts</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Tennis Courts</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="tennisCourtsChoice" id="tennisCourtsOne" value=1>
+							<label for="tennisCourtsOne">1</label>
+							<input type="radio" name="tennisCourtsChoice" id="tennisCourtsTwo" value=2>
+							<label for="tennisCourtsTwo">2</label>
+							<input type="radio" name="tennisCourtsChoice" id="tennisCourtsThree" value=3>
+							<label for="tennisCourtsThree">3</label>
+							<input type="radio" name="tennisCourtsChoice" id="tennisCourtsFour" value=4>
+							<label for="tennisCourtsFour">4</label>
+							<input type="radio" name="tennisCourtsChoice" id="tennisCourtsFive" value=5 checked="checked">
+							<label for="tennisCourtsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Uneven surface/cracks. Close off access.
+								<br><br><strong>Recommended Action</strong><br>Repair/replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Schedule repairs.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Infrastructure may require future attention; monitor.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Normal wear. Very good condition.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="tennisCourtsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="tennisCourtsText" id="tennisCourtsComment"></textarea>
+				</div>	
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Hardscapes: Basketball Courts</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Basketball Courts</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="basketballCourtsChoice" id="basketballCourtsOne" value=1>
+							<label for="basketballCourtsOne">1</label>
+							<input type="radio" name="basketballCourtsChoice" id="basketballCourtsTwo" value=2>
+							<label for="basketballCourtsTwo">2</label>
+							<input type="radio" name="basketballCourtsChoice" id="basketballCourtsThree" value=3>
+							<label for="basketballCourtsThree">3</label>
+							<input type="radio" name="basketballCourtsChoice" id="basketballCourtsFour" value=4>
+							<label for="basketballCourtsFour">4</label>
+							<input type="radio" name="basketballCourtsChoice" id="basketballCourtsFive" value=5 checked="checked">
+							<label for="basketballCourtsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Uneven surface/cracks. Close off access.
+								<br><br><strong>Recommended Action</strong><br>Repair/replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Schedule repairs.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Infrastructure may require future attention; monitor.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Normal wear. Very good condition.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="basketballCourtsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="basketballCourtsText" id="basketballCourtsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Reservable Picnic Area: Tables</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Tables (Reservable Picnic Area)</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="reservablePicnicTablesChoice" id="reservablePicnicTablesOne" value=1>
+							<label for="reservablePicnicTablesOne">1</label>
+							<input type="radio" name="reservablePicnicTablesChoice" id="reservablePicnicTablesTwo" value=2>
+							<label for="reservablePicnicTablesTwo">2</label>
+							<input type="radio" name="reservablePicnicTablesChoice" id="reservablePicnicTablesThree" value=3>
+							<label for="reservablePicnicTablesThree">3</label>
+							<input type="radio" name="reservablePicnicTablesChoice" id="reservablePicnicTablesFour" value=4>
+							<label for="reservablePicnicTablesFour">4</label>
+							<input type="radio" name="reservablePicnicTablesChoice" id="reservablePicnicTablesFive" value=5 checked="checked">
+							<label for="reservablePicnicTablesFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Unusable and/or vandalized.
+								<br><br><strong>Recommended Action</strong><br>Replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Extensive wear/exposed re-bar/damaged.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Normal wear and tear/ Shown signs of previous wear and tear.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Almost new; worn from the elements.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="reservablePicnicTablesText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="reservablePicnicTablesText" id="reservablePicnicTablesComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Reservable Picnic Area: BBQ Pits</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>BBQ Pits (Reservable Picnic Area)</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="reservableBbqPitsChoice" id="reservableBbqPitsOne" value=1>
+							<label for="reservableBbqPitsOne">1</label>
+							<input type="radio" name="reservableBbqPitsChoice" id="reservableBbqPitsTwo" value=2>
+							<label for="reservableBbqPitsTwo">2</label>
+							<input type="radio" name="reservableBbqPitsChoice" id="reservableBbqPitsThree" value=3>
+							<label for="reservableBbqPitsThree">3</label>
+							<input type="radio" name="reservableBbqPitsChoice" id="reservableBbqPitsFour" value=4>
+							<label for="reservableBbqPitsFour">4</label>
+							<input type="radio" name="reservableBbqPitsChoice" id="reservableBbqPitsFive" value=5 checked="checked">
+							<label for="reservableBbqPitsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Unusable and/or vandalized.
+								<br><br><strong>Recommended Action</strong><br>Replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Damaged and needs replacement soon.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Heavy use but good condition.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Practically new; needs maintenance.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="reservableBbqPitsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="reservableBbqPitsText" id="reservableBbqPitsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Non-Reservable Picnic Area: Tables</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Tables (Non-Reservable Picnic Area)</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="nonReservablePicnicTablesChoice" id="nonReservablePicnicTablesOne" value=1>
+							<label for="nonReservablePicnicTablesOne">1</label>
+							<input type="radio" name="nonReservablePicnicTablesChoice" id="nonReservablePicnicTablesTwo" value=2>
+							<label for="nonReservablePicnicTablesTwo">2</label>
+							<input type="radio" name="nonReservablePicnicTablesChoice" id="nonReservablePicnicTablesThree" value=3>
+							<label for="nonReservablePicnicTablesThree">3</label>
+							<input type="radio" name="nonReservablePicnicTablesChoice" id="nonReservablePicnicTablesFour" value=4>
+							<label for="nonReservablePicnicTablesFour">4</label>
+							<input type="radio" name="nonReservablePicnicTablesChoice" id="nonReservablePicnicTablesFive" value=5 checked="checked">
+							<label for="nonReservablePicnicTablesFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Unusable and/or vandalized.
+								<br><br><strong>Recommended Action</strong><br>Replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Extensive wear/exposed re-bar/damaged.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Normal wear and tear/ Shown signs of previous wear and tear.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Almost new; worn from the elements.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="nonReservablePicnicTablesText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="nonReservablePicnicTablesText" id="nonReservablePicnicTablesComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Non-Reservable Picnic Area: BBQ Pits</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>BBQ Pits (Non-Reservable Picnic Area)</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="nonReservableBbqPitsChoice" id="nonReservableBbqPitsOne" value=1>
+							<label for="nonReservableBbqPitsOne">1</label>
+							<input type="radio" name="nonReservableBbqPitsChoice" id="nonReservableBbqPitsTwo" value=2>
+							<label for="nonReservableBbqPitsTwo">2</label>
+							<input type="radio" name="nonReservableBbqPitsChoice" id="nonReservableBbqPitsThree" value=3>
+							<label for="nonReservableBbqPitsThree">3</label>
+							<input type="radio" name="nonReservableBbqPitsChoice" id="nonReservableBbqPitsFour" value=4>
+							<label for="nonReservableBbqPitsFour">4</label>
+							<input type="radio" name="nonReservableBbqPitsChoice" id="nonReservableBbqPitsFive" value=5 checked="checked">
+							<label for="nonReservableBbqPitsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Unusable and/or vandalized.
+								<br><br><strong>Recommended Action</strong><br>Replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Damaged and needs replacement soon.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Heavy use but good condition.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Practically new; needs maintenance.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="nonReservableBbqPitsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="nonReservableBbqPitsText" id="nonReservableBbqPitsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Amenities: Game Tables</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Game Tables</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="gameTablesChoice" id="gameTablesOne" value=1>
+							<label for="gameTablesOne">1</label>
+							<input type="radio" name="gameTablesChoice" id="gameTablesTwo" value=2>
+							<label for="gameTablesTwo">2</label>
+							<input type="radio" name="gameTablesChoice" id="gameTablesThree" value=3>
+							<label for="gameTablesThree">3</label>
+							<input type="radio" name="gameTablesChoice" id="gameTablesFour" value=4>
+							<label for="gameTablesFour">4</label>
+							<input type="radio" name="gameTablesChoice" id="gameTablesFive" value=5 checked="checked">
+							<label for="gameTablesFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Broken and/or un-usable.
+								<br><br><strong>Recommended Action</strong><br>Replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Needs repairs.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Worn but usable.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Excellent condition.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="gameTablesText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="gameTablesText" id="gameTablesComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Amenities: Drinking Fountains</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Drinking Fountains</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="drinkingFountainsChoice" id="drinkingFountainsOne" value=1>
+							<label for="drinkingFountainsOne">1</label>
+							<input type="radio" name="drinkingFountainsChoice" id="drinkingFountainsTwo" value=2>
+							<label for="drinkingFountainsTwo">2</label>
+							<input type="radio" name="drinkingFountainsChoice" id="drinkingFountainsThree" value=3>
+							<label for="drinkingFountainsThree">3</label>
+							<input type="radio" name="drinkingFountainsChoice" id="drinkingFountainsFour" value=4>
+							<label for="drinkingFountainsFour">4</label>
+							<input type="radio" name="drinkingFountainsChoice" id="drinkingFountainsFive" value=5 checked="checked">
+							<label for="drinkingFountainsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Broken and/or un-usable.
+								<br><br><strong>Recommended Action</strong><br>Replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Clogged/ leaking/ or stuck button.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Clean- might require minor adjustment.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Regular wear and tear.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="drinkingFountainsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="drinkingFountainsText" id="drinkingFountainsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Amenities: Benches</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Benches</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="benchesChoice" id="benchesOne" value=1>
+							<label for="benchesOne">1</label>
+							<input type="radio" name="benchesChoice" id="benchesTwo" value=2>
+							<label for="benchesTwo">2</label>
+							<input type="radio" name="benchesChoice" id="benchesThree" value=3>
+							<label for="benchesThree">3</label>
+							<input type="radio" name="benchesChoice" id="benchesFour" value=4>
+							<label for="benchesFour">4</label>
+							<input type="radio" name="benchesChoice" id="benchesFive" value=5 checked="checked">
+							<label for="benchesFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Broken and/or un-usable.
+								<br><br><strong>Recommended Action</strong><br>Replace.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Needs repairs.
+								<br><br><strong>Recommended Action</strong><br>Schedule replacements.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Minor vandalism/ usable.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Regular wear and tear.<br><br>
+								<strong>Recommended Action</strong><br>Inspect as required.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="benchesText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="benchesText" id="benchesComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Playgrounds: Tot (2-5 years old)</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Tot Playgrounds (2-5 years old)</center></h2>
+					<h3 style="color:black"><center>Please select both the playground surface and the rating for the playground.</center></h3>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="totPlaygroundsSurfaceChoice" id="totPlaygroundsSurfaceOne" value="Rubber">
+							<label for="totPlaygroundsSurfaceOne">Rubber</label>
+							<input type="radio" name="totPlaygroundsSurfaceChoice" id="totPlaygroundsSurfaceTwo" value="Sand">
+							<label for="totPlaygroundsSurfaceTwo">Sand</label>
+							<input type="radio" name="totPlaygroundsSurfaceChoice" id="totPlaygroundsSurfaceThree" value="Fibar">
+							<label for="totPlaygroundsSurfaceThree">Fibar</label>
+						</fieldset></center>
+					</div>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="totPlaygroundsChoice" id="totPlaygroundsOne" value=1>
+							<label for="totPlaygroundsOne">1</label>
+							<input type="radio" name="totPlaygroundsChoice" id="totPlaygroundsTwo" value=2>
+							<label for="totPlaygroundsTwo">2</label>
+							<input type="radio" name="totPlaygroundsChoice" id="totPlaygroundsThree" value=3>
+							<label for="totPlaygroundsThree">3</label>
+							<input type="radio" name="totPlaygroundsChoice" id="totPlaygroundsFour" value=4>
+							<label for="totPlaygroundsFour">4</label>
+							<input type="radio" name="totPlaygroundsChoice" id="totPlaygroundsFive" value=5 checked="checked">
+							<label for="totPlaygroundsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Exposed footings/fabric or vandalism.
+								<br><br><strong>Recommended Action</strong><br>Close down playground.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Fibar/sand below the acceptable safety line. 
+								Equipment might be in need of repair. 
+								<br><br><strong>Recommended Action</strong><br>Schedule necessary repairs.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Normal wear and tear.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions. May require minor attention.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Very good condition overall.<br><br>
+								<strong>Recommended Action</strong><br>Continue monitoring.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="totPlaygroundsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="totPlaygroundsText" id="totPlaygroundsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Playgrounds: Youth (5-11 years old)</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Youth Playgrounds (5-11 years old)</center></h2>
+					<h3 style="color:black"><center>Please select both the playground surface and the rating for the playground.</center></h3>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="youthPlaygroundsSurfaceChoice" id="youthPlaygroundsSurfaceOne" value="Rubber">
+							<label for="youthPlaygroundsSurfaceOne">Rubber</label>
+							<input type="radio" name="youthPlaygroundsSurfaceChoice" id="youthPlaygroundsSurfaceTwo" value="Sand">
+							<label for="youthPlaygroundsSurfaceTwo">Sand</label>
+							<input type="radio" name="youthPlaygroundsSurfaceChoice" id="youthPlaygroundsSurfaceThree" value="Fibar">
+							<label for="youthPlaygroundsSurfaceThree">Fibar</label>
+						</fieldset></center>
+					</div>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="youthPlaygroundsChoice" id="youthPlaygroundsOne" value=1>
+							<label for="youthPlaygroundsOne">1</label>
+							<input type="radio" name="youthPlaygroundsChoice" id="youthPlaygroundsTwo" value=2>
+							<label for="youthPlaygroundsTwo">2</label>
+							<input type="radio" name="youthPlaygroundsChoice" id="youthPlaygroundsThree" value=3>
+							<label for="youthPlaygroundsThree">3</label>
+							<input type="radio" name="youthPlaygroundsChoice" id="youthPlaygroundsFour" value=4>
+							<label for="youthPlaygroundsFour">4</label>
+							<input type="radio" name="youthPlaygroundsChoice" id="youthPlaygroundsFive" value=5 checked="checked">
+							<label for="youthPlaygroundsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Exposed footings/fabric or vandalism.
+								<br><br><strong>Recommended Action</strong><br>Close down playground.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Fibar/sand below the acceptable safety line. 
+								Equipment might be in need of repair. 
+								<br><br><strong>Recommended Action</strong><br>Schedule necessary repairs.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Normal wear and tear.
+								<br><br><strong>Recommended Action</strong><br>Monitor conditions. May require minor attention.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Very good condition overall.<br><br>
+								<strong>Recommended Action</strong><br>Continue monitoring.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>New. No action necessary.</p>
+							</div>
+						</div>
+					</div>
+					<label for="youthPlaygroundsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="youthPlaygroundsText" id="youthPlaygroundsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Restroom Buildings</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Restroom Buildings</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="restroomBuildingsChoice" id="restroomBuildingsOne" value=1>
+							<label for="restroomBuildingsOne">1</label>
+							<input type="radio" name="restroomBuildingsChoice" id="restroomBuildingsTwo" value=2>
+							<label for="restroomBuildingsTwo">2</label>
+							<input type="radio" name="restroomBuildingsChoice" id="restroomBuildingsThree" value=3>
+							<label for="restroomBuildingsThree">3</label>
+							<input type="radio" name="restroomBuildingsChoice" id="restroomBuildingsFour" value=4>
+							<label for="restroomBuildingsFour">4</label>
+							<input type="radio" name="restroomBuildingsChoice" id="restroomBuildingsFive" value=5 checked="checked">
+							<label for="restroomBuildingsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Beyond repair.
+								<br><br><strong>Recommended Action</strong><br>Demolition and reconstruction.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Broken components/looks pretty bad. 
+								Equipment might be in need of repair. 
+								<br><br><strong>Recommended Action</strong><br>Schedule replacement of components.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Decent condition. Shows normal wear and tear.
+								<br><br><strong>Recommended Action</strong><br>Monitor and inspect daily noting descrepancies. 
+								PW Work orders submitted.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Looks great, but minor repairs necessary.<br><br>
+								<strong>Recommended Action</strong><br>Perform maintenance and required repairs.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>Inspect.</p>
+							</div>
+						</div>
+					</div>
+					<label for="restroomBuildingsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="restroomBuildingsText" id="restroomBuildingsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Par-Course Stations</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Par-Course Stations</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="parCourseStationsChoice" id="parCourseStationsOne" value=1>
+							<label for="parCourseStationsOne">1</label>
+							<input type="radio" name="parCourseStationsChoice" id="parCourseStationsTwo" value=2>
+							<label for="parCourseStationsTwo">2</label>
+							<input type="radio" name="parCourseStationsChoice" id="parCourseStationsThree" value=3>
+							<label for="parCourseStationsThree">3</label>
+							<input type="radio" name="parCourseStationsChoice" id="parCourseStationsFour" value=4>
+							<label for="parCourseStationsFour">4</label>
+							<input type="radio" name="parCourseStationsChoice" id="parCourseStationsFive" value=5 checked="checked">
+							<label for="parCourseStationsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Beyond repair.
+								<br><br><strong>Recommended Action</strong><br>Reconstruct par-course stations.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Usable but damaged. 
+								Equipment might be in need of repair. 
+								<br><br><strong>Recommended Action</strong><br>Make necessary repairs.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Shows normal wear and tear. May need repairs.
+								<br><br><strong>Recommended Action</strong><br>Continue regular maintenance and repairs.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Looks great, but not quite new.<br><br>
+								<strong>Recommended Action</strong><br>Continue monitoring and perform regular maintenance.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>No action needed. Brand new facility.</p>
+							</div>
+						</div>
+					</div>
+					<label for="parCourseStationsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="parCourseStationsText" id="parCourseStationsComment"></textarea>
+				</div>
+			<div data-role="collapsible" data-content-theme="false">
+				<h4>Trails</h4>
+				<div role="main" class="ui-content jqm-content">
+					<h2><center>Trails</center></h2>
+					<div data-demo-html="true">
+						<center><fieldset data-role="controlgroup" data-type="horizontal">
+							<input type="radio" name="trailsChoice" id="trailsOne" value=1>
+							<label for="trailsOne">1</label>
+							<input type="radio" name="trailsChoice" id="trailsTwo" value=2>
+							<label for="trailsTwo">2</label>
+							<input type="radio" name="trailsChoice" id="trailsThree" value=3>
+							<label for="trailsThree">3</label>
+							<input type="radio" name="trailsChoice" id="trailsFour" value=4>
+							<label for="trailsFour">4</label>
+							<input type="radio" name="trailsChoice" id="trailsFive" value=5 checked="checked">
+							<label for="trailsFive">5</label>
+						</fieldset></center>
+					</div>
+					<div data-role="collapsible" data-content-theme="false">
+						<h4>Rating Meaning</h4>
+							<div class="col-xs-12 well">
+								<p><strong>1 - Unacceptable</strong><br>Trail so overgrown and bumpy that it is
+								too dangerous for visitors.
+								<br><br><strong>Recommended Action</strong><br>Close trail immediately and perform full overhaul.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>2 - Needs Improvement</strong><br>Weeds growing along trail and trail 
+								is beginning to crumble.<br><br><strong>Recommended Action</strong><br>Make 
+								necessary repairs and recondition trail.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>3 - Acceptable</strong><br>Normal wear and tear. Bumpy but still safe for visitors.
+								<br><br><strong>Recommended Action</strong><br>Continue regular maintenance and repairs.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>4 - Very Good</strong><br>Slightly bumpy but looks pretty new.<br><br>
+								<strong>Recommended Action</strong><br>Monitor and perform regular weeding.</p>
+							</div>
+							<div class="col-xs-12 well">
+								<p><strong>5 - New</strong><br>New<br><br><strong>Recommended Action</strong>
+								<br>No action needed. Brand new luxuriously smooth trail.</p>
+							</div>
+						</div>
+					</div>
+					<label for="trailsText">Additional comments:</label>
+					<textarea cols="40" rows="8" name="trailsText" id="trailsComment"></textarea>
+				</div>
+			<br>
+			<input type="submit" value="Submit" action="onclick">
+			<br>
+			<br>
+			<br>
+		</div>
+	</div>
+</form>
+</body>
+</html>
